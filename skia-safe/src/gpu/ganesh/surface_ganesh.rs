@@ -185,3 +185,20 @@ pub fn get_backend_render_target(
 pub fn resolve_msaa(surface: &mut Surface) {
     unsafe { sb::C_SkSurfaces_ResolveMSAA(surface.native_mut()) }
 }
+
+/// Inserts a list of GPU semaphores that the current GPU-backed API must wait on before executing
+/// any more commands on the GPU for this surface.
+///
+/// We only guarantee blocking transfer and fragment shader work, but may block earlier stages
+/// as well depending on the backend. If this call returns false, then the GPU back-end will
+/// not wait on any passed in semaphores, and the client will still own the semaphores,
+/// regardless of the value of delete_semaphores_after_wait.
+///
+/// If delete_semaphores_after_wait is false then Skia will not delete the semaphores. In this case
+/// it is the client's responsibility to not destroy or attempt to reuse the semaphores
+/// until it knows that Skia has finished waiting on them.
+/// This can be done by using finishedProcs on flush calls.
+
+pub fn wait(surface: &mut Surface, wait_semaphores: &[gpu::backend_semaphore::BackendSemaphore], delete_semaphores_after_wait:bool) -> bool {
+    unsafe { sb::C_SkSurface_wait(surface.native_mut(), wait_semaphores.len() as i32, wait_semaphores.as_ptr() as *const sb::GrBackendSemaphore, delete_semaphores_after_wait) }
+}
