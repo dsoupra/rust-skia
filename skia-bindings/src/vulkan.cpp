@@ -2,7 +2,9 @@
 #include "include/gpu/ganesh/vk/GrBackendDrawableInfo.h"
 #include "include/gpu/ganesh/GrBackendSurface.h"
 #include "include/gpu/ganesh/GrDirectContext.h"
+#include "include/gpu/ganesh/GrBackendSemaphore.h"
 #include "include/gpu/ganesh/vk/GrVkBackendSurface.h"
+#include "include/gpu/ganesh/vk/GrVkBackendSemaphore.h"
 #include "include/gpu/ganesh/vk/GrVkDirectContext.h"
 #include "include/gpu/ganesh/vk/GrVkTypes.h"
 #include "include/gpu/vk/VulkanBackendContext.h"
@@ -162,6 +164,12 @@ extern "C" GrDirectContext* C_GrDirectContexts_MakeVulkan(
         return GrDirectContexts::MakeVulkan(*vkBackendContext, *options).release();
     }
     return GrDirectContexts::MakeVulkan(*vkBackendContext).release();
+}
+
+extern "C" void C_BackendSemaphores_ConstructVulkan(GrBackendSemaphore* uninitialized, VkSemaphore semaphore) {
+    auto backend_semaphore = GrBackendSemaphores::MakeVk(semaphore);
+    new(uninitialized) GrBackendSemaphore(std::move(backend_semaphore));
+
 }
 
 // MutableTextureState.h

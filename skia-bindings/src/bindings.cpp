@@ -352,6 +352,11 @@ extern "C" int C_SkSurface_height(const SkSurface* self) {
     return self->height();
 }
 
+extern "C" bool C_SkSurface_wait(SkSurface* self, int numSemaphores, const GrBackendSemaphore* waitSemaphores,
+              bool deleteSemaphoresAfterWait = true) {
+    return self->wait(numSemaphores, waitSemaphores, deleteSemaphoresAfterWait);
+}
+
 extern "C" void C_SkSurface_imageInfo(SkSurface* self, SkImageInfo* info) {
     *info = self->imageInfo();
 }

@@ -2,10 +2,10 @@
 
 cmake_minimum_required (VERSION 3.0)
 project (skia-bindings)
-
+set(CMAKE_CXX_STANDARD 17)
 include_directories(skia-bindings/skia)
 
-add_compile_definitions(SK_SHAPER_HARFBUZZ_AVAILABLE, SK_VULKAN, SK_XML, SK_METAL, SK_DIRECT3D)
+add_compile_definitions(SK_SHAPER_HARFBUZZ_AVAILABLE SK_VULKAN SK_XML SK_METAL SK_DIRECT3D)
 
 add_library(skiabindings
         skia-bindings/src/bindings.cpp

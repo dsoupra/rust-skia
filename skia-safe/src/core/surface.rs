@@ -489,6 +489,10 @@ impl Surface {
         unsafe { sb::C_SkSurface_width(self.native()) }
     }
 
+    pub fn wait(&mut self, wait_semaphores: &[gpu::backend_semaphore::BackendSemaphore], delete_semaphores_after_wait:bool) -> bool {
+        unsafe { sb::C_SkSurface_wait(self.native_mut(), wait_semaphores.len() as i32, wait_semaphores.as_ptr() as *const sb::GrBackendSemaphore, delete_semaphores_after_wait) }
+    }
+
     /// Returns pixel row count; may be zero or greater.
     ///
     /// Returns: number of pixel rows

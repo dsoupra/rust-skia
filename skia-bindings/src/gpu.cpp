@@ -7,6 +7,7 @@
 #include "include/core/SkSurface.h"
 #include "include/core/SkImageGenerator.h"
 #include "include/gpu/MutableTextureState.h"
+#include "include/gpu/ganesh/GrBackendSemaphore.h"
 #include "include/gpu/ganesh/GrDirectContext.h"
 #include "include/gpu/ganesh/GrYUVABackendTextures.h"
 #include "include/gpu/ganesh/SkImageGanesh.h"
@@ -32,6 +33,21 @@ extern "C" bool C_SkSurface_replaceBackendTexture(
 
 extern "C" bool C_SkImageGenerator_isValid(const SkImageGenerator* self, GrRecordingContext* context) {
     return self->isValid(context);
+}
+
+//
+// gpu/GrBackendSemaphore.h
+//
+
+extern "C" void C_GrBackendSemaphore_destruct(GrBackendSemaphore* self) {
+    self->~GrBackendSemaphore();
+}
+
+extern "C" void C_GrBackendSemaphore_copy(GrBackendSemaphore* self, const GrBackendSemaphore* rhs) {
+    *self = *rhs;
+}
+extern "C" void C_GrBackendSemaphore_CopyConstruct(GrBackendSemaphore* uninitialized, const GrBackendSemaphore* font) {
+    new(uninitialized) GrBackendSemaphore(*font);
 }
 
 //

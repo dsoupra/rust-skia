@@ -47,6 +47,18 @@ impl Default for FlushInfo {
         }
     }
 }
+impl FlushInfo {
+    pub fn new(signal_semaphores: &mut [gpu::backend_semaphore::BackendSemaphore]) -> Self {
+        Self {
+            num_semaphores : signal_semaphores.len(),
+            signal_semaphores: signal_semaphores.as_mut_ptr() as *mut sb::GrBackendSemaphore,
+            finished_proc: None,
+            finished_context: ptr::null_mut(),
+            submitted_proc: None,
+            submitted_context: ptr::null_mut(),
+        }
+    }
+}
 
 native_transmutable!(sb::GrFlushInfo, FlushInfo, flush_info_layout);
 

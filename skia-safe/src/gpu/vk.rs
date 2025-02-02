@@ -5,10 +5,12 @@ use skia_bindings as sb;
 mod vulkan_backend_context;
 mod vulkan_mutable_texture_state;
 mod vulkan_types;
+mod vulkan_backend_semaphore;
 
 pub use super::ganesh::vk::vk_types::*;
 pub use vulkan_backend_context::*;
 pub use vulkan_mutable_texture_state::*;
+pub use vulkan_backend_semaphore::*;
 pub use vulkan_types::*;
 
 pub use crate::gpu::ganesh::vk::BackendDrawableInfo;
@@ -46,6 +48,7 @@ pub use sb::VkRenderPass as RenderPass;
 pub use sb::VkSamplerYcbcrModelConversion as SamplerYcbcrModelConversion;
 pub use sb::VkSamplerYcbcrRange as SamplerYcbcrRange;
 pub use sb::VkSharingMode as SharingMode;
+pub use sb::VkSemaphore as Semaphore;
 
 pub const QUEUE_FAMILY_IGNORED: u32 = !0;
 

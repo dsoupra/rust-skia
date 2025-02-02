@@ -4,6 +4,7 @@ pub mod ganesh;
 #[cfg(feature = "gl")]
 pub mod gl;
 mod mutable_texture_state;
+pub mod backend_semaphore;
 mod types;
 #[cfg(feature = "vulkan")]
 pub mod vk;
